@@ -1,15 +1,34 @@
 import React from "react";
+import { Theme, ThemeProvider } from "@emotion/react";
+
 import { AppDataContextProvider } from "./contexts/AppData.context";
+import CharactersCarouselSection from "./sections/CharactersCarouselSection";
+
 import { AppContainer } from "./App.styled";
-import CharacterWidget from "./components/CharacterWidget";
+
+const theme: Theme = {
+  colors: {
+    green: "rgba(135, 199, 64, 0.15)",
+    red: "rgba(235, 87, 87, 0.15)",
+    blue: "rgba(178, 208, 235, 1)",
+    black: "rgba(51, 51, 51, 1)",
+    darkGray: "rgba(79, 79, 79, 1)",
+    gray: "rgba(130, 130, 130, 1)",
+    lightGray: "rgba(224, 224, 224, 1)",
+    white: "rgba(242, 242, 242, 1)",
+    shadow: "rgba(0, 0, 0, 0.15)",
+  },
+};
 
 const App: React.FC = () => {
   return (
-    <AppDataContextProvider>
-      <AppContainer>
-        <CharacterWidget />
-      </AppContainer>
-    </AppDataContextProvider>
+    <ThemeProvider theme={theme}>
+      <AppDataContextProvider>
+        <AppContainer>
+          <CharactersCarouselSection />
+        </AppContainer>
+      </AppDataContextProvider>
+    </ThemeProvider>
   );
 };
 
