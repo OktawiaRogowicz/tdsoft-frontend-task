@@ -44,6 +44,18 @@ export interface EpisodeFilter extends Pick<CharacterFilter, "name" | "page"> {
   episode?: string;
 }
 
+export interface CharactersInfoResponse {
+  info: CharactersInfo;
+  result: Character[];
+}
+
+export interface CharactersInfo {
+  count: number;
+  pages: number;
+  next: string;
+  prev: string;
+}
+
 export interface Character extends ResourceBase {
   status: "Dead" | "Alive" | "unknown";
   species: string;

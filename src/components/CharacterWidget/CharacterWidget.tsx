@@ -1,29 +1,79 @@
-import React, { useContext } from "react";
-import { AppDataContext } from "../../contexts/AppData.context";
+import React from "react";
+
+import StyledParagraph from "@/components/StyledParagraph";
+import { CharacterType } from "@/data/getCharacterData.tsx";
+
 import {
   CharacterWidgetContainer,
-  CharacterStatusLabel,
-  CharacterAvatar
+  CharacterAvatar,
+  CharacterWidgetHeader,
+  CharacterWidgetContent,
+  CharacterWidgetDescriptionContainer,
 } from "./CharacterWidget.styled";
+import CharacterWidgetField from "./components/CharacterWidgetField";
 
-const CharacterWidget: React.FC = () => {
-  const { character } = useContext(AppDataContext);
+type CharacterWidgetType = {
+  error: boolean;
+  character?: CharacterType;
+  isLoading: boolean;
+  lastAction?: string;
+};
 
-  if (!character) return null;
+const CharacterWidget: React.FC<CharacterWidgetType> = ({
+  error,
+  character,
+  isLoading,
+  lastAction,
+}) => {
+  if (isLoading)
+    return (
+      <CharacterWidgetContainer
+        key={character?.id}
+        fromRight={lastAction === "next"}
+      >
+        <CharacterWidgetContent>
+          <StyledParagraph type="medium">Loading...</StyledParagraph>
+        </CharacterWidgetContent>
+      </CharacterWidgetContainer>
+    );
+
+  if (error || !character)
+    return (
+      <CharacterWidgetContainer key="errorWidget" fromRight>
+        <CharacterWidgetContent>
+          <StyledParagraph type="medium">
+            An error occured... try again later.
+          </StyledParagraph>
+        </CharacterWidgetContent>
+      </CharacterWidgetContainer>
+    );
+
   return (
-    <CharacterWidgetContainer>
-      <div>
-        <p>Name: {character.name}</p>
-
-        <p>
-          Status:{" "}
-          <CharacterStatusLabel isAlive={character.status === "Alive"}>
-            {character.status}
-          </CharacterStatusLabel>
-        </p>
-      </div>
-
-      <CharacterAvatar src={character.imageUrl} alt="Character avatar" />
+    <CharacterWidgetContainer
+      key={character.id}
+      fromRight={lastAction === "next"}
+    >
+      <CharacterWidgetHeader status={character.status}>
+        <StyledParagraph type="bold">{character.name}</StyledParagraph>
+      </CharacterWidgetHeader>
+      <CharacterWidgetContent>
+        <CharacterWidgetDescriptionContainer>
+          <CharacterWidgetField label={"id"} description={`#${character.id}`} />
+          <CharacterWidgetField
+            label={"status"}
+            description={character.status}
+          />
+          <CharacterWidgetField
+            label={"gender"}
+            description={character.gender}
+          />
+          <CharacterWidgetField
+            label={"episodes"}
+            description={character.episodes}
+          />
+        </CharacterWidgetDescriptionContainer>
+        <CharacterAvatar src={character.imageUrl} alt="Character avatar" />
+      </CharacterWidgetContent>
     </CharacterWidgetContainer>
   );
 };
