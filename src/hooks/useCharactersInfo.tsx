@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
-import getCharactersInfo from "../data/getCharactersInfo";
-import { MIN_CHARACTER_ID } from "../config.ts";
+import { MIN_CHARACTER_ID } from "@/config.ts";
+import getCharactersInfo from "@/data/getCharactersInfo";
 
 const useCharactersInfo = () => {
   const [maxId, setMaxId] = useState<number>(MIN_CHARACTER_ID);

@@ -1,13 +1,15 @@
 import React, { useState } from "react";
-import CharacterWidget from "../../components/CharacterWidget";
-import StyledButton from "../../components/StyledButton";
+
+import CharacterWidget from "@/components/CharacterWidget";
+import StyledButton from "@/components/StyledButton";
+import { MIN_CHARACTER_ID } from "@/config.ts";
+import { useAppData } from "@/contexts/AppData/useAppData.tsx";
+import useCharactersInfo from "@/hooks/useCharactersInfo.tsx";
+
 import {
   ButtonsContainer,
   CharactersCarouselSectionContainer,
 } from "./CharactersCarouselSection.styled.ts";
-import { useAppData } from "../../contexts/AppData/useAppData.tsx";
-import useCharactersInfo from "../../hooks/useCharactersInfo.tsx";
-import { MIN_CHARACTER_ID } from "../../config.ts";
 
 const CharactersCarouselSection: React.FC = () => {
   const { maxId } = useCharactersInfo();

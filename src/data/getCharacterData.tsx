@@ -1,7 +1,7 @@
 import ky from "ky";
 
-import { type Character } from "../types/RickAndMorty.types";
-import { API_URL } from "../config";
+import { type Character } from "@/types/RickAndMorty.types";
+import { API_URL } from "@/config";
 
 export type CharacterType = {
   id: Character["id"];

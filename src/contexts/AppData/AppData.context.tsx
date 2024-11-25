@@ -6,10 +6,8 @@ import React, {
   useCallback,
 } from "react";
 
-import getCharacterData, {
-  CharacterType,
-} from "../../data/getCharacterData.tsx";
-import { MIN_CHARACTER_ID } from "../../config.ts";
+import { MIN_CHARACTER_ID } from "@/config.ts";
+import getCharacterData, { CharacterType } from "@/data/getCharacterData.tsx";
 
 type AppData = {
   id: number;

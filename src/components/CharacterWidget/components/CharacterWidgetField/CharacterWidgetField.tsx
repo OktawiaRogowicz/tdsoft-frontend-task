@@ -1,4 +1,4 @@
-import StyledParagraph from "../../../StyledParagraph";
+import StyledParagraph from "@/components/StyledParagraph";
 
 import {
   CharacterWidgetFieldContainer,

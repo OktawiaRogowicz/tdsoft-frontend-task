@@ -1,6 +1,7 @@
 import React from "react";
 
-import StyledParagraph from "../StyledParagraph";
+import StyledParagraph from "@/components/StyledParagraph";
+import { CharacterType } from "@/data/getCharacterData.tsx";
 
 import {
   CharacterWidgetContainer,
@@ -10,7 +11,6 @@ import {
   CharacterWidgetDescriptionContainer,
 } from "./CharacterWidget.styled";
 import CharacterWidgetField from "./components/CharacterWidgetField";
-import { CharacterType } from "../../data/getCharacterData.tsx";
 
 type CharacterWidgetType = {
   error: boolean;

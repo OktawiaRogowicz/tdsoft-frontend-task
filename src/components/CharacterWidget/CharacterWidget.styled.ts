@@ -1,7 +1,7 @@
 import { keyframes } from "@emotion/react";
 import styled from "@emotion/styled";
-import { Character } from "../../types/RickAndMorty.types.ts";
 
+import { Character } from "@/types/RickAndMorty.types.ts";
 
 const appearFromRightAnimation = keyframes`
   0% {

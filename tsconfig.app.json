@@ -23,11 +23,9 @@
     "noFallthroughCasesInSwitch": true,
 //    "noUncheckedSideEffectImports": true,
 
+    "baseUrl": ".",
     "paths": {
-      "@components/*": ["./src/components/*"],
-      "@contexts/*": ["./src/contexts/*"],
-      "@sections/*": ["./src/sections/*"],
-      "@types/*": ["./src/types/*"]
+      "@/*": ["./src/*"]
     }
   },
   "include": ["src/*", "emotion.d.ts"]
