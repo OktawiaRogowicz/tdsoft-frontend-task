@@ -13,26 +13,33 @@ import CharacterWidgetField from "./components/CharacterWidgetField";
 import { CharacterType } from "../../data/getCharacterData.tsx";
 
 type CharacterWidgetType = {
-  character: CharacterType;
+  error: boolean;
+  character?: CharacterType;
   isLoading: boolean;
+  lastAction?: string;
 };
 
 const CharacterWidget: React.FC<CharacterWidgetType> = ({
+  error,
   character,
   isLoading,
+  lastAction,
 }) => {
   if (isLoading)
     return (
-      <CharacterWidgetContainer>
+      <CharacterWidgetContainer
+        key={character?.id}
+        fromRight={lastAction === "next"}
+      >
         <CharacterWidgetContent>
           <StyledParagraph type="medium">Loading...</StyledParagraph>
         </CharacterWidgetContent>
       </CharacterWidgetContainer>
     );
 
-  if (!character)
+  if (error || !character)
     return (
-      <CharacterWidgetContainer>
+      <CharacterWidgetContainer key="errorWidget" fromRight>
         <CharacterWidgetContent>
           <StyledParagraph type="medium">
             An error occured... try again later.
@@ -42,7 +49,10 @@ const CharacterWidget: React.FC<CharacterWidgetType> = ({
     );
 
   return (
-    <CharacterWidgetContainer>
+    <CharacterWidgetContainer
+      key={character.id}
+      fromRight={lastAction === "next"}
+    >
       <CharacterWidgetHeader status={character.status}>
         <StyledParagraph type="bold">{character.name}</StyledParagraph>
       </CharacterWidgetHeader>

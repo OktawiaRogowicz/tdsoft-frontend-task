@@ -1,15 +1,48 @@
+import { keyframes } from "@emotion/react";
 import styled from "@emotion/styled";
 import { Character } from "../../types/RickAndMorty.types.ts";
 
-export const CharacterWidgetContainer = styled.div`
+
+const appearFromRightAnimation = keyframes`
+  0% {
+      opacity: 0;
+       transform: translateX(15%);
+  }
+  100% {
+      opacity: 1;
+      transform: translateX(0%);
+  }
+`;
+
+const appearFromLeftAnimation = keyframes`
+  0% {
+      opacity: 0;
+       transform: translateX(-15%);
+  }
+  100% {
+      opacity: 1;
+      transform: translateX(0%);
+  }
+`;
+
+export const CharacterWidgetContainer = styled.div<{
+  fromRight?: boolean;
+}>`
   display: flex;
   flex-direction: column;
-  background-color: ${(props) => props.theme.colors.white};
-  border: ${(props) => `1px solid ${props.theme.colors.lightGray}`};
+  background-color: ${({ theme }) => theme.colors.offWhite};
+  border: ${({ theme }) => `1px solid ${theme.colors.lightGray}`};
   border-radius: 8px;
-  min-width: 360px;
   min-height: 127px;
   font-family: "Open Sans", sans-serif;
+
+  animation: ${(props) =>
+      props.fromRight ? appearFromRightAnimation : appearFromLeftAnimation}
+    300ms ease-in-out forwards;
+
+  @media (min-width: 420px) {
+    min-width: 360px;
+  }
 `;
 
 export const CharacterWidgetHeader = styled.div<{
@@ -40,7 +73,7 @@ export const CharacterWidgetDescriptionContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
-  gap: 8px;
+  gap: 8px 24px;
   padding: 14px 0;
 `;
 

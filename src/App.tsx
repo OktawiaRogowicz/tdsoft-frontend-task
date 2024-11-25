@@ -1,10 +1,10 @@
 import React from "react";
-import { Theme, ThemeProvider } from "@emotion/react";
 
-import { AppDataContextProvider } from "./contexts/AppData.context";
+import { AppDataContextProvider } from "./contexts/AppData/AppData.context.tsx";
 import CharactersCarouselSection from "./sections/CharactersCarouselSection";
 
 import { AppContainer } from "./App.styled";
+import { Theme, ThemeProvider } from "@emotion/react";
 
 const theme: Theme = {
   colors: {
@@ -15,7 +15,8 @@ const theme: Theme = {
     darkGray: "rgba(79, 79, 79, 1)",
     gray: "rgba(130, 130, 130, 1)",
     lightGray: "rgba(224, 224, 224, 1)",
-    white: "rgba(242, 242, 242, 1)",
+    offWhite: "rgba(242, 242, 242, 1)",
+    white: "rgba(255, 255, 255, 1)",
     shadow: "rgba(0, 0, 0, 0.15)",
   },
 };

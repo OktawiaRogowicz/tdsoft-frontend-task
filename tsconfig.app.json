@@ -14,13 +14,21 @@
     "moduleDetection": "force",
     "noEmit": true,
     "jsx": "react-jsx",
+    "jsxImportSource": "@emotion/react",
 
     /* Linting */
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+//    "noUncheckedSideEffectImports": true,
+
+    "paths": {
+      "@components/*": ["./src/components/*"],
+      "@contexts/*": ["./src/contexts/*"],
+      "@sections/*": ["./src/sections/*"],
+      "@types/*": ["./src/types/*"]
+    }
   },
-  "include": ["src/*"]
+  "include": ["src/*", "emotion.d.ts"]
 }

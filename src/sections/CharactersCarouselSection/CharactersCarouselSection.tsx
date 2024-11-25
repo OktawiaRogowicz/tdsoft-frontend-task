@@ -1,33 +1,43 @@
 import React from "react";
-import { useAppData } from "../../contexts/AppData.context";
 import CharacterWidget from "../../components/CharacterWidget";
 import StyledButton from "../../components/StyledButton";
 import {
   ButtonsContainer,
   CharactersCarouselSectionContainer,
 } from "./CharactersCarouselSection.styled.ts";
+import { useAppData } from "../../contexts/AppData/useAppData.tsx";
 
 const CharactersCarouselSection: React.FC = () => {
   const {
+    error,
     character,
     isLoading,
     handleOnPreviousButtonClick,
     handleOnNextButtonClick,
+    nextButtonDisabled,
+    prevButtonDisabled,
+    lastAction,
   } = useAppData();
-
-  if (!character) return null;
 
   return (
     <CharactersCarouselSectionContainer>
-      <CharacterWidget character={character} isLoading={isLoading} />
+      <CharacterWidget
+        error={error}
+        character={character}
+        isLoading={isLoading}
+        lastAction={lastAction}
+      />
       <ButtonsContainer>
         <StyledButton
-          disabled={isLoading}
+          disabled={prevButtonDisabled || isLoading}
           onClick={handleOnPreviousButtonClick}
         >
           Previous
         </StyledButton>
-        <StyledButton disabled={isLoading} onClick={handleOnNextButtonClick}>
+        <StyledButton
+          disabled={nextButtonDisabled || isLoading}
+          onClick={handleOnNextButtonClick}
+        >
           Next
         </StyledButton>
       </ButtonsContainer>

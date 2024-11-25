@@ -1,5 +1,3 @@
-import React from "react";
-
 import StyledParagraph from "../../../StyledParagraph";
 
 import {

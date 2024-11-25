@@ -12,7 +12,11 @@ const StyledButton: React.FC<StyledButtonType> = ({
   disabled = false,
   ...props
 }) => {
-  return <StyledButtonComponent {...props}>{children}</StyledButtonComponent>;
+  return (
+    <StyledButtonComponent disabled={disabled} {...props}>
+      {children}
+    </StyledButtonComponent>
+  );
 };
 
 export default StyledButton;
