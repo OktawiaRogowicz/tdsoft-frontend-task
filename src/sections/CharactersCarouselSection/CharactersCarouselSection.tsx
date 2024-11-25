@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import CharacterWidget from "../../components/CharacterWidget";
 import StyledButton from "../../components/StyledButton";
 import {
@@ -6,18 +6,29 @@ import {
   CharactersCarouselSectionContainer,
 } from "./CharactersCarouselSection.styled.ts";
 import { useAppData } from "../../contexts/AppData/useAppData.tsx";
+import useCharactersInfo from "../../hooks/useCharactersInfo.tsx";
+import { MIN_CHARACTER_ID } from "../../config.ts";
 
 const CharactersCarouselSection: React.FC = () => {
-  const {
-    error,
-    character,
-    isLoading,
-    handleOnPreviousButtonClick,
-    handleOnNextButtonClick,
-    nextButtonDisabled,
-    prevButtonDisabled,
-    lastAction,
-  } = useAppData();
+  const { maxId } = useCharactersInfo();
+  const { id, error, character, isLoading, increaseId, decreaseId } =
+    useAppData();
+
+  const [lastAction, setLastAction] = useState<"next" | "prev" | undefined>(
+    undefined,
+  );
+  const prevButtonDisabled = id <= MIN_CHARACTER_ID;
+  const nextButtonDisabled = id >= maxId;
+
+  const handleOnNextButtonClick = () => {
+    increaseId();
+    setLastAction("next");
+  };
+
+  const handleOnPreviousButtonClick = () => {
+    decreaseId();
+    setLastAction("prev");
+  };
 
   return (
     <CharactersCarouselSectionContainer>

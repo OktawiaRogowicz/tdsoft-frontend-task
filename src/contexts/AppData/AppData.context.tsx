@@ -1,88 +1,81 @@
-import React, { createContext, useState, useEffect, useMemo } from "react";
+import React, {
+  createContext,
+  useState,
+  useEffect,
+  useMemo,
+  useCallback,
+} from "react";
 
 import getCharacterData, {
   CharacterType,
 } from "../../data/getCharacterData.tsx";
-import useCharactersInfo from "../../hooks/useCharactersInfo.tsx";
 import { MIN_CHARACTER_ID } from "../../config.ts";
 
 type AppData = {
+  id: number;
   isLoading: boolean;
   character?: CharacterType;
-  handleOnNextButtonClick: () => void;
-  handleOnPreviousButtonClick: () => void;
   error: boolean;
-  nextButtonDisabled: boolean;
-  prevButtonDisabled: boolean;
-  lastAction: string;
+  increaseId: () => void;
+  decreaseId: () => void;
 };
 
 export const AppDataContext = createContext<AppData>({
-  handleOnNextButtonClick(): void {},
-  handleOnPreviousButtonClick(): void {},
+  id: MIN_CHARACTER_ID,
   isLoading: true,
   error: false,
-  nextButtonDisabled: false,
-  prevButtonDisabled: true,
-  lastAction: "",
+  increaseId: () => null,
+  decreaseId: () => null,
 });
 
 export const AppDataContextProvider = ({
   children,
 }: React.PropsWithChildren) => {
-  const { maxId } = useCharactersInfo();
-
+  const [id, setId] = useState<AppData["id"]>(MIN_CHARACTER_ID);
   const [isLoading, setIsLoading] = useState<AppData["isLoading"]>(true);
-  const [id, setId] = useState(MIN_CHARACTER_ID);
   const [characterData, setCharacterData] =
     useState<AppData["character"]>(undefined);
-  const [error, setError] = useState(false);
-  const [lastAction, setLastAction] = useState<string>("");
+  const [error, setError] = useState<AppData["error"]>(false);
 
-  const nextButtonDisabled = id >= maxId - 1;
-  const prevButtonDisabled = id <= MIN_CHARACTER_ID;
+  const increaseId = useCallback(() => {
+    setId(id + 1);
+  }, [id]);
+
+  const decreaseId = useCallback(() => {
+    setId(id - 1);
+  }, [id]);
 
   const appData: AppData = useMemo(() => {
-    const handleOnNextButtonClick = () => {
-      const updatedId = id + 1;
-      setId(updatedId);
-      setLastAction("next");
-    };
-
-    const handleOnPreviousButtonClick = () => {
-      const updatedId = id - 1;
-      setId(updatedId);
-      setLastAction("prev");
-    };
-
     return {
-      isLoading,
+      id,
       character: characterData,
-      handleOnNextButtonClick,
-      handleOnPreviousButtonClick,
+      isLoading,
       error,
-      nextButtonDisabled,
-      prevButtonDisabled,
-      lastAction,
+      increaseId,
+      decreaseId,
     };
-  }, [isLoading, characterData, maxId, error, id, lastAction]);
+  }, [id, characterData, isLoading, error, increaseId, decreaseId]);
 
   useEffect(() => {
     (async () => {
+      setError(false);
       setIsLoading(true);
       const response = await getCharacterData(id);
       if (!response) {
         setError(true);
+        setCharacterData(undefined);
       } else {
         setCharacterData(response);
       }
       setIsLoading(false);
     })();
-  }, [id, maxId]);
+  }, [id]);
 
   return (
     <AppDataContext.Provider value={appData}>
-      {children}
+      <AppDataContext.Provider value={appData}>
+        {children}
+      </AppDataContext.Provider>
     </AppDataContext.Provider>
   );
 };
